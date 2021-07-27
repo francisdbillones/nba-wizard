@@ -31,6 +31,8 @@ For each video frame, these will be the features that will be either inputted du
 possible modification to be made: instead of detecting relevant objects, instead feed into CNN to extract feature map and
 use that instead. this may be a better option as less work is required from a human to label objects in a frame
 
+EDIT: I'm going to do this now, and maybe try the object localization technique later on if I'm not satisfied with the model performance
+
 2. Locations of the objects in the frame will be fed into another network that will determine if the frame is
 part of a shot attempt.
 
