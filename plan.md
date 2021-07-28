@@ -14,30 +14,24 @@ over a given time frame to continuously update its prediction on whether or not 
 It will *not* use historical player statistics for prediction. Ideally, a prediction for a certain player's shot 
 will be independent of the player themselves. Instead, it will use neural networks to intelligently decide.
 
-### Features
-
-For each video frame, these will be the features that will be either inputted during training or outputted during inference:
-
-1. Location of basketball in frame (bounding box)
-2. Location of hoop in frame (bounding box)
-3. Location of backboard in frame (bounding box)
-4. Whether the current frame is part of a shot attempt or not
-5. If current frame is a shot attempt, whether the shot attempt is successful
-
 ### Architecture
 
-1. Objects in the frame will first be detected and localized using a fine-tuned YOLOv5.
+#### Proposal 1: RNN-CNN
+- Each frame will be fed into a CNN to produce a feature map
+- The produced feature map will be fed into an LSTM to produce probability of success.
 
-possible modification to be made: instead of detecting relevant objects, instead feed into CNN to extract feature map and
-use that instead. this may be a better option as less work is required from a human to label objects in a frame
+Pros:
+- Less human labor required to label data
 
-EDIT: I'm going to do this now, and maybe try the object localization technique later on if I'm not satisfied with the model performance
+Cons:
+- May be less accurate
 
-2. Locations of the objects in the frame will be fed into another network that will determine if the frame is
-part of a shot attempt.
+#### Proposal 2: YOLO-RNN
+- Each frame will be fed into a fine-tuned YOLO to produce relevant object locations
+- Object locations will be fed into an LSTM to produce probability of success.
 
-possible modification to be made: if the frame is indeed contain a shot attempt or part of a shot attempt, we assume that the next 1
-second or so are also shot attempt frames. This may reap computation speedups, but lose out on precision, due to the possibility of overestimating.
+Pros:
+- May be more accurate
 
-3. If the frame is part of a shot attempt, feed frame into a CNN-RNN that takes into account previous shot attempt frames (if any) that outputs the probability
-of a successful shot attempt.
+Cons:
+- More human labor required to label data
