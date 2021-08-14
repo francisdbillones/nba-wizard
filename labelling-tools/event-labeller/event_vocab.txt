@@ -1,0 +1,6 @@
+successful-3-point-shot
+failed-3-point-shot
+successful-mid-range-shot
+failed-mid-range-shot
+successful-layup-or-dunk
+failed-layup-or-dunk

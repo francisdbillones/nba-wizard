@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<script defer src="static/scripts/index.js"></script>
+		<script defer src="static/scripts/log_events.js"></script>
+	</head>
+
+	<body>
+		<input id="video-file-input" type="file" accept="*.mp4" required>
+		<input id="video-name-input" type="text" placeholder="Video name" required>
+
+		<video id="video-node" height="720" width="1280" controls></video>
+		<button id="event-trigger" type="button">Trigger event</button>
+
+		<table id="events-table">
+			<thead>
+				<tr>
+					<th>Event</th>
+					<th>start_ts</th>
+					<th>end_ts</th>
+				</tr>
+			</thead>
+			<tbody id="events-table-body">
+
+			</tbody>
+		</table>
+	</body>
+</html>
