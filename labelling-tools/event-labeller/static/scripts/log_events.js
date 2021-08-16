@@ -10,6 +10,7 @@
 	})().catch(error => console.error(error));
 
 	let recording_event = false;
+	let awaiting_event_type = false;
 	let start_ts = -1;
 	let end_ts = -1;
 	event_trigger.addEventListener('click', async () => {
@@ -18,11 +19,16 @@
 			recording_event = true;
 
 			event_trigger.innerText = 'End event';
+		} else if (!awaiting_event_type) {
+			end_ts = video_node.currentTime;
+			awaiting_event_type = true;
+
+			event_trigger.innerText = 'Give event type verdict'
 		} else {
 			await video_node.pause();
 
-			end_ts = video_node.currentTime;
 			recording_event = false;
+			awaiting_event_type = false;
 
 			if (end_ts > start_ts) {
 				const event_type = prompt_event_type(event_vocab);
@@ -40,7 +46,7 @@
 
 	if (video_name_input.value) {
 		get_events(video_name_input.value).then(events => {
-			for (const event of Array.from(events)) {	 
+			for (const event of Array.from(events)) {
 				append_event_to_events_table(event.start_ts, event.end_ts, event.event_type);
 			}
 		});
